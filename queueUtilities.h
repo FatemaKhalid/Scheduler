@@ -15,6 +15,7 @@
 ///==============================
 //don't mess with this variable//
 int qid;
+int my_algo;
 //===============================
 
 struct processData {
@@ -23,7 +24,6 @@ struct processData {
     int arrivaltime;
     int priority;
     int runningtime;
-    int my_algo;
     int remainingtime;
     
      
@@ -42,7 +42,7 @@ struct messagebuffer
 // my_ready.pop()
 bool operator< ( processData const& lhs,processData const& rhs) {
 
-	if (lhs.my_algo == 2)
+	if (my_algo == 2)
 	{
             if (lhs.remainingtime != rhs.remainingtime)
 		return lhs.remainingtime > rhs.remainingtime;
@@ -51,7 +51,7 @@ bool operator< ( processData const& lhs,processData const& rhs) {
 
 	}
 		
-	else if (lhs.my_algo == 1)
+	else if (my_algo == 1)
             if(lhs.priority != rhs.priority)
 		return lhs.priority < rhs.priority;
             else  return lhs.arrivaltime > rhs.arrivaltime;

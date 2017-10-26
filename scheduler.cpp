@@ -12,7 +12,11 @@
 int recv_ret=-1,to_be_end=0;
 void handle_rec(int)
 {
-    do{
+   
+}
+void to_receive()
+{
+     do{
     struct processData pD;
     recv_ret=Recmsg(pD);
     if(recv_ret!=-1)
@@ -25,11 +29,12 @@ void handle_rec(int)
         to_be_end=1;
    
     }while(recv_ret>1);
+    
 }
 int main(int argc, char* argv[]) {
     initQueue(false);
     initClk();
-    int choosen_sch=0;
+    int choosen_sch=0,quantum=-1;
     
     //TODO: implement the scheduler :)
 
@@ -38,27 +43,35 @@ int main(int argc, char* argv[]) {
     //Preimplemented Functions examples
 
     /////Toget time use the following function
-     // int x= getClk();
-    //printf("current time is %d\n",x);
-
-    struct processData pD1;  //to receive choosen scheduler
+     
+   /* struct processData pD1;  //to receive choosen scheduler
     cout<< "on receive "<<Recmsg(pD1)<<" time is "<<getClk()<<endl;//returns -1 on failure; 1 on the end of processes, 0 no processes available yet
     printf("current received data %d\n",pD1.id);
-    choosen_sch=pD1.id;
+    choosen_sch=pD1.id;*/
     //raise(SIGTSTP);
+    
+    choosen_sch=atoi(argv[4]);
+    
+    if(choosen_sch==3)
+    {
+        quantum=atoi(argv[5]);
+       
+    }
+   
   
     signal(SIGINT,handle_rec);
-    
-  //  int recv_ret=-1,to_be_end=0;
-    while(1)
+        while(1)
     {
     
-        cout<<"scheduler"<<endl;
+        
+        to_receive();
     if(to_be_end==1)   // && queue_of_processs.empty() will be added
+    {
+        printf("end of processes...exiting sch\n");
         break;
+    }
        
-     
-    
+   
     pause();
     //raise(SIGTSTP);
     //kill(getpid(),SIGTSTP);
@@ -66,6 +79,7 @@ int main(int argc, char* argv[]) {
    
     
     exit(0);
-  //  return 0;
+    //kill(getppid(),SIGCHLD);
+    //return 0;
     
 }
